@@ -11,7 +11,7 @@ from tkinter import ttk, messagebox, filedialog
 # =====================
 # VERSION
 # =====================
-VERSION = "2.1"
+VERSION = "3.2"
 BASE_URL = "https://raw.githubusercontent.com/superlupetto/FreeSuperDownloader/main/"
 VERSION_URL = BASE_URL + "version.txt"
 UPDATE_CANDIDATES = [
@@ -630,9 +630,9 @@ def paste_url(event):
 
 root = Tk()
 root.title("FreeSuperDownloader PRO")
-root.geometry("820x920")
+root.geometry("680x760")
 root.configure(bg="#f2f4ff")
-root.minsize(780, 860)
+root.minsize(600, 640)
 root.attributes('-alpha', 0.0)
 
 # fade in
@@ -724,7 +724,7 @@ class GlassCard(Frame):
         _rounded_rect(self.canvas, 4, 4, w - 4, h - 4, r=self.radius - 3, fill="", outline="#f8fafc", width=1, tags="glass")
 
         # place inner content with padding
-        pad = 18
+        pad = 12
         self.canvas.coords(self._win, pad, pad)
         self.canvas.itemconfigure(self._win, width=w - pad * 2, height=h - pad * 2)
 
@@ -889,7 +889,7 @@ style.configure("TProgressbar", thickness=10, troughcolor="#e7eaff", background=
 
 style.configure("Primary.TButton",
                 font=("Segoe UI", 10, "bold"),
-                padding=(18, 11),
+                padding=(12, 7),
                 background="#0f172a",
                 foreground="#ffffff",
                 borderwidth=0,
@@ -899,7 +899,7 @@ style.map("Primary.TButton",
 
 style.configure("Secondary.TButton",
                 font=("Segoe UI", 10),
-                padding=(16, 11),
+                padding=(10, 7),
                 background="#ffffff",
                 foreground="#0f172a",
                 borderwidth=1,
@@ -909,7 +909,7 @@ style.map("Secondary.TButton",
 
 style.configure("Chip.TButton",
                 font=("Segoe UI", 9),
-                padding=(12, 9),
+                padding=(9, 6),
                 background="#f1f3ff",
                 foreground="#0f172a",
                 borderwidth=0)
@@ -935,8 +935,8 @@ def _layout_bg(_e=None):
     _draw_glow_blob(bg, int(w * 0.76), int(h * 0.74), int(scale * 0.22), "#93c5fd", steps=14)
     _draw_glow_blob(bg, int(w * 0.18), int(h * 0.82), int(scale * 0.14), "#a7f3d0", steps=14)
     # keep container centered and sized
-    max_w = min(980, w - 56)
-    max_h = min(980, h - 46)
+    max_w = min(760, w - 28)
+    max_h = min(820, h - 24)
     container.configure(width=max_w, height=max_h)
     container.place_configure(relx=0.5, rely=0.5, anchor="center", width=max_w, height=max_h)
 
@@ -944,18 +944,18 @@ root.bind("<Configure>", _layout_bg)
 
 # HEADER
 header = Frame(container, bg="#f2f4ff")
-header.pack(fill=X, padx=12, pady=(8, 10))
+header.pack(fill=X, padx=8, pady=(4, 6))
 
-Label(header, text="FreeSuperDownloader", font=("Segoe UI", 24, "bold"), bg="#f2f4ff", fg="#0f172a").pack(anchor="w")
+Label(header, text="FreeSuperDownloader", font=("Segoe UI", 20, "bold"), bg="#f2f4ff", fg="#0f172a").pack(anchor="w")
 Label(header, text="Downloader & Convert • minimal future UI",
       font=("Segoe UI", 10), bg="#f2f4ff", fg="#64748b").pack(anchor="w", pady=(6, 0))
 
-version = Label(header, text="v3.1", bg="#f2f4ff", fg="#64748b", font=("Segoe UI", 9))
+version = Label(header, text="v3.2", bg="#f2f4ff", fg="#64748b", font=("Segoe UI", 9))
 version.place(relx=1.0, x=-10, y=5, anchor="ne")
 
 # CARD
 card = GlassCard(container, radius=26, bg="#f2f4ff")
-card.pack(fill=BOTH, expand=True, padx=12, pady=(0, 14))
+card.pack(fill=BOTH, expand=True, padx=8, pady=(0, 8))
 card_body = card.content
 
 mode = StringVar(value="mp3")
@@ -964,7 +964,7 @@ mode = StringVar(value="mp3")
 mode_frame = Frame(card_body, bg="#ffffff")
 mode_frame.pack(pady=(6, 12))
 
-AnimatedModeToggle(mode_frame, variable=mode, width=280, height=44, bg="#ffffff").pack()
+AnimatedModeToggle(mode_frame, variable=mode, width=220, height=36, bg="#ffffff").pack()
 progress_var = StringVar(value="0%")
 
 Label(card_body, text="Incolla un link", bg="#ffffff", fg="#0f172a",
@@ -972,7 +972,7 @@ Label(card_body, text="Incolla un link", bg="#ffffff", fg="#0f172a",
 
 url_entry = Entry(card_body, bg="#f7f8ff", fg="#0f172a", insertbackground="#0f172a",
                   relief="flat", highlightthickness=1, highlightbackground="#dbe2ff", highlightcolor="#4f46e5")
-url_entry.pack(fill=X, ipady=12, pady=(0, 10))
+url_entry.pack(fill=X, ipady=7, pady=(0, 6))
 
 # RIGHT CLICK PASTE MENU (modern UX)
 context_menu = Menu(root, tearoff=0)
@@ -988,32 +988,32 @@ url_entry.bind("<Control-v>", lambda e: None)
 url_entry.bind("<Double-Button-1>", paste_url)
 
 btns = Frame(card_body, bg="#ffffff")
-btns.pack(pady=(14, 10))
+btns.pack(pady=(6, 5))
 
 ttk.Button(btns, text="Download", command=download, style="Primary.TButton").pack(side=LEFT, padx=6)
 ttk.Button(btns, text="Update", command=run_update, style="Secondary.TButton").pack(side=LEFT, padx=6)
 ttk.Button(btns, text="yt-dlp", command=update_ytdlp, style="Secondary.TButton").pack(side=LEFT, padx=6)
 
 folder = Frame(card_body, bg="#ffffff")
-folder.pack(pady=(0, 8))
+folder.pack(pady=(0, 4))
 
 ttk.Button(folder, text="Apri Musica", command=lambda: open_folder(MUSIC_DIR), style="Chip.TButton").pack(side=LEFT, padx=6)
 ttk.Button(folder, text="Apri Video", command=lambda: open_folder(VIDEO_DIR), style="Chip.TButton").pack(side=LEFT, padx=6)
 
 # progress LIVE CARD
-progress_bar = ttk.Progressbar(card_body, mode='determinate', length=560, style="TProgressbar")
-progress_bar.pack(pady=(16, 8))
+progress_bar = ttk.Progressbar(card_body, mode='determinate', length=420, style="TProgressbar")
+progress_bar.pack(pady=(8, 4), fill=X, padx=10)
 
 Label(card_body, textvariable=progress_var, bg="#ffffff", fg="#64748b", font=("Segoe UI", 9)).pack()
 
-output = Text(card_body, height=10, bg="#fbfcff", fg="#0f172a",
+output = Text(card_body, height=6, bg="#fbfcff", fg="#0f172a",
               insertbackground="#0f172a", relief="flat",
               highlightthickness=1, highlightbackground="#dbe2ff", highlightcolor="#4f46e5")
-output.pack(fill=BOTH, pady=(16, 6))
+output.pack(fill=BOTH, expand=True, pady=(8, 4))
 
 # LOCAL FILES CARD (liquid glass)
 local_card = GlassCard(container, radius=26, bg="#f2f4ff")
-local_card.pack(fill=BOTH, expand=False, padx=12, pady=(0, 10))
+local_card.pack(fill=BOTH, expand=False, padx=8, pady=(0, 6))
 local_body = local_card.content
 
 Label(local_body, text="File locali", bg="#ffffff", fg="#0f172a",
@@ -1029,9 +1029,9 @@ ttk.Button(local_actions, text="Converti MKV → MP4", command=convert_mkv_to_mp
 ttk.Button(local_actions, text="Estrai MP3", command=extract_mp3_local, style="Secondary.TButton").pack(side=RIGHT)
 
 local_list_frame = Frame(local_body, bg="#ffffff")
-local_list_frame.pack(fill=BOTH, pady=(12, 6))
+local_list_frame.pack(fill=BOTH, pady=(6, 3))
 
-local_files_list = Listbox(local_list_frame, height=4, bg="#fbfcff", fg="#0f172a",
+local_files_list = Listbox(local_list_frame, height=3, bg="#fbfcff", fg="#0f172a",
                            highlightthickness=1, highlightbackground="#dbe2ff", relief="flat",
                            selectbackground="#dbe2ff", selectforeground="#0f172a")
 local_files_list.pack(fill=BOTH, expand=True)
